@@ -1,0 +1,60 @@
+<resources>
+    <string name="app_name">ToDo</string>
+
+
+    <!-- hints -->
+    <string name="task_title">Title</string>
+    <string name="task_details">Details</string>
+    <string name="group_name">Group Name</string>
+
+
+    <!-- menu -->
+    <string name="add">Add</string>
+    <string name="clear_all_tasks">Clear All Tasks</string>
+    <string name="sort">Sort</string>
+    <string name="sort_a_to_z">A to Z</string>
+    <string name="sort_z_to_a">Z to A</string>
+    <string name="sort_early_to_old">Earliest to Oldest</string>
+    <string name="sort_old_to_early">Oldest to Earliest</string>
+    <string name="sort_completed_to_pending">Completed to Pending</string>
+    <string name="sort_pending_to_completed">Pending to Completed</string>
+
+
+    <!-- buttons -->
+    <string name="add_task">Add Task</string>
+    <string name="add_group">Add Group</string>
+    <string name="update">Update</string>
+    <string name="close">Close</string>
+    <string name="cancel">Cancel</string>
+    <string name="delete_task">Delete</string>
+    <string name="edit">Edit</string>
+
+
+    <!-- errors -->
+    <string name="cannot_be_empty">Cannot be Empty</string>
+
+
+    <!-- toasts -->
+    <string name="task_added">Task Added</string>
+    <string name="task_updated">Task Updated</string>
+    <string name="group_added">Group Created</string>
+    <string name="group_updated">Group Updated</string>
+    <string name="error_creating_group">Error creating group</string>
+
+
+    <!-- labels -->
+    <string name="no_tasks">No Tasks</string>
+    <string name="no_groups">No Groups</string>
+    <string name="change_group_name">Change group name</string>
+    <string name="details">Details</string>
+    <string name="daily_task">Daily Task</string>
+    <string name="show_count">Show Count</string>
+    <string name="task_count">%1d %2s</string>
+    <string name="task_count_stat">%d/%d</string>
+    <string name="delete_all_tasks_in_groups">Delete all tasks in the group?</string>
+    <plurals name="task_quantity">
+        <item quantity="one">task</item>
+        <item quantity="other">tasks</item>
+    </plurals>
+
+</resources>

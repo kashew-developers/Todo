@@ -1,0 +1,19 @@
+<resources>
+
+    <attr name="textColorPrimary" format="reference" />
+    <attr name="textColorSecondary" format="reference" />
+    <attr name="colorRipple" format="reference" />
+
+    <style name="AppTheme" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+
+        <item name="textColorPrimary">@color/textColorPrimary</item>
+        <item name="textColorSecondary">@color/textColorSecondary</item>
+
+        <item name="backgroundColor">@color/backgroundColor</item>
+        <item name="colorRipple">@color/colorRipple</item>
+    </style>
+
+</resources>

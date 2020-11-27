@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".AddTaskActivity">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <EditText
+            android:id="@+id/taskTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="15dp"
+            android:background="@drawable/input_field_drawable"
+            android:elevation="5dp"
+            android:hint="@string/task_title"
+            android:importantForAutofill="no"
+            android:inputType="text"
+            android:maxLength="100"
+            android:minLines="1"
+            android:padding="10dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <EditText
+            android:id="@+id/taskDetails"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="15dp"
+            android:background="@drawable/input_field_drawable"
+            android:elevation="5dp"
+            android:gravity="top|start"
+            android:hint="@string/task_details"
+            android:importantForAutofill="no"
+            android:inputType="textMultiLine"
+            android:maxLength="500"
+            android:minLines="5"
+            android:padding="10dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/taskTitle" />
+
+        <com.google.android.material.switchmaterial.SwitchMaterial
+            android:id="@+id/dailyTask"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="15dp"
+            android:checked="true"
+            android:onClick="onDailyTaskClicked"
+            android:text="@string/daily_task"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/taskDetails"
+            app:switchPadding="10dp" />
+
+        <com.google.android.material.switchmaterial.SwitchMaterial
+            android:id="@+id/showCount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="15dp"
+            android:checked="true"
+            android:text="@string/show_count"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/dailyTask"
+            app:switchPadding="10dp" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/addTask"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="15dp"
+            android:onClick="onAddClicked"
+            android:text="@string/add_task"
+            android:textAllCaps="false"
+            app:cornerRadius="10dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/showCount" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</ScrollView>

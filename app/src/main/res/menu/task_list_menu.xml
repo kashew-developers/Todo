@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/addOption"
+        android:icon="@drawable/add_outline_icon"
+        android:title="@string/add"
+        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/clearTasksOption"
+        android:title="@string/clear_all_tasks" />
+
+    <item
+        android:id="@+id/sortOptions"
+        android:title="@string/sort">
+        <menu>
+            <item
+                android:id="@+id/atozOption"
+                android:title="@string/sort_a_to_z" />
+            <item
+                android:id="@+id/ztoaOption"
+                android:title="@string/sort_z_to_a" />
+            <item
+                android:id="@+id/oldtoearlyOption"
+                android:title="@string/sort_old_to_early" />
+            <item
+                android:id="@+id/earlytooldOption"
+                android:title="@string/sort_early_to_old" />
+            <item
+                android:id="@+id/completedtopendingOption"
+                android:title="@string/sort_completed_to_pending" />
+            <item
+                android:id="@+id/pendingtocompletedOption"
+                android:title="@string/sort_pending_to_completed" />
+        </menu>
+    </item>
+
+</menu>
