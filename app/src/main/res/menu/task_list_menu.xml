@@ -9,10 +9,6 @@
         app:showAsAction="always" />
 
     <item
-        android:id="@+id/clearTasksOption"
-        android:title="@string/clear_all_tasks" />
-
-    <item
         android:id="@+id/sortOptions"
         android:title="@string/sort">
         <menu>
