@@ -71,17 +71,26 @@ class GroupsActivity : AppCompatActivity() {
     }
 
     private fun initializeCursor() {
-        cursor = dbHelper.queryGroup(db)
-        cursor?.let { binding.noGroups.visibility = if (it.count < 1) View.VISIBLE else View.GONE }
-                ?: run { binding.noGroups.visibility = View.GONE }
+        db?.let {
+            cursor = dbHelper.queryGroup(it)
+            cursor?.let { c -> binding.noGroups.visibility = if (c.count < 1) View.VISIBLE else View.GONE }
+                    ?: run { binding.noGroups.visibility = View.GONE }
+        }
     }
 
     private fun initializeAdapter() {
+        val tempCursor = cursor
+        tempCursor ?: return
+
         if (!this::adapter.isInitialized) {
-            adapter = GroupRecycleListAdapter(cursor, this)
-                    .setOnItemClickListener { holder, showDetail -> onItemClicked(holder, showDetail) }
+            adapter = GroupRecycleListAdapter(tempCursor, this)
+                    .setOnItemClickListener(object : GroupRecycleListAdapter.OnItemClickListener {
+                        override fun onItemClickListener(holder: GroupViewHolder, showDetail: Boolean) {
+                            onItemClicked(holder, showDetail)
+                        }
+                    })
         } else {
-            adapter.updateCursor(cursor)
+            adapter.updateCursor(tempCursor)
         }
     }
 
@@ -95,7 +104,9 @@ class GroupsActivity : AppCompatActivity() {
 
     // functionality
     private fun addGroup(groupName: String) {
-        if (dbHelper.insertGroup(db, groupName)) {
+        val tempDb = db
+        tempDb ?: return
+        if (dbHelper.insertGroup(tempDb, groupName)) {
             initializeCursor()
             initializeAdapter()
             initializeList()
@@ -111,7 +122,10 @@ class GroupsActivity : AppCompatActivity() {
     }
 
     private fun deleteGroup(groupName: String) {
-        dbHelper.deleteGroup(db, groupName)
+        val tempDb = db
+        tempDb ?: return
+
+        dbHelper.deleteGroup(tempDb, groupName)
 
         initializeCursor()
         initializeAdapter()
@@ -119,7 +133,10 @@ class GroupsActivity : AppCompatActivity() {
     }
 
     private fun updateGroup(oldGroupName: String, newGroupName: String) {
-        dbHelper.updateGroup(db, oldGroupName, newGroupName)
+        val tempDb = db
+        tempDb ?: return
+
+        dbHelper.updateGroup(tempDb, oldGroupName, newGroupName)
 
         initializeCursor()
         initializeAdapter()
@@ -132,9 +149,13 @@ class GroupsActivity : AppCompatActivity() {
         if (showDetail) {
             with(AlertDialog.Builder(this)) {
                 setTitle(holder.groupName)
-                setPositiveButton(R.string.delete_task) { _, _ -> onDeleteGroupClicked(holder.groupName) }
+                setPositiveButton(R.string.delete_task) { _, _ ->
+                    onDeleteGroupClicked(holder.groupName ?: "")
+                }
                 setNeutralButton(R.string.close, null)
-                setNegativeButton(R.string.edit) { _, _ -> onEditGroupClicked(holder.groupName) }
+                setNegativeButton(R.string.edit) { _, _ ->
+                    onEditGroupClicked(holder.groupName ?: "")
+                }
                 setCancelable(true)
                 show()
             }

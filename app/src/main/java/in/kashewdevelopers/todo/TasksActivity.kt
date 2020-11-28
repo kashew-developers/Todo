@@ -27,7 +27,7 @@ class TasksActivity : AppCompatActivity() {
     private var cursor: Cursor? = null
     private lateinit var adapter: TaskRecycleListAdapter
 
-    private var groupName: String? = null
+    private var groupName: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -78,7 +78,7 @@ class TasksActivity : AppCompatActivity() {
     private fun initialize() {
         val intent = intent
 
-        groupName = intent.getStringExtra(Constants.GROUP)
+        groupName = intent.getStringExtra(Constants.GROUP) ?: ""
 
         dbHelper = TaskDbHelper(this)
         db = dbHelper.readableDatabase
@@ -91,17 +91,27 @@ class TasksActivity : AppCompatActivity() {
     }
 
     private fun initializeCursor() {
-        cursor = dbHelper.queryTask(db, groupName)
-        binding.noTasks.visibility = cursor?.let { if (it.count < 1) View.VISIBLE else View.GONE }
-                ?: View.GONE
+        db?.let {
+            cursor = dbHelper.queryTask(it, groupName)
+            binding.noTasks.visibility =
+                    cursor?.let { c -> if (c.count < 1) View.VISIBLE else View.GONE }
+                            ?: View.GONE
+        }
     }
 
     private fun initializeAdapter() {
-        if (::adapter.isInitialized) {
-            adapter = TaskRecycleListAdapter(this, cursor)
-                    .setOnItemClickListener { holder, showDetail -> onItemClicked(holder, showDetail) }
+        val tempCursor = cursor
+        tempCursor ?: return
+
+        if (!::adapter.isInitialized) {
+            adapter = TaskRecycleListAdapter(tempCursor, this)
+                    .setOnItemClickListener(object : TaskRecycleListAdapter.OnItemClickListener {
+                        override fun onItemClickListener(holder: TaskViewHolder, showDetail: Boolean) {
+                            onItemClicked(holder, showDetail)
+                        }
+                    })
         } else {
-            adapter.updateCursor(cursor)
+            adapter.updateCursor(tempCursor)
         }
     }
 
@@ -134,18 +144,22 @@ class TasksActivity : AppCompatActivity() {
                 show()
             }
         } else {
-            dbHelper.updateTaskCompletionState(db, holder.data.id, !holder.data.isCompleted)
+            db?.let {
+                dbHelper.updateTaskCompletionState(it, holder.data.id, !holder.data.isCompleted)
 
-            initializeCursor()
-            initializeAdapter()
+                initializeCursor()
+                initializeAdapter()
+            }
         }
     }
 
     private fun onDeleteTaskClicked(taskId: Int) {
-        dbHelper.deleteTask(db, taskId, groupName)
+        db?.let {
+            dbHelper.deleteTask(it, taskId, groupName)
 
-        initializeCursor()
-        initializeAdapter()
+            initializeCursor()
+            initializeAdapter()
+        }
     }
 
     private fun onEditTaskClicked(holder: TaskViewHolder) {

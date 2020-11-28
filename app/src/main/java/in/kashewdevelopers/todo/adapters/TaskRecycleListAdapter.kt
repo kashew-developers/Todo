@@ -34,13 +34,8 @@ class TaskRecycleListAdapter(private var cursor: Cursor, private var context: Co
         holder.binding.checkbox.isChecked = holder.data.isCompleted
         holder.binding.title.text = holder.data.title
 
-        if (holder.data.details.isEmpty()) {
-            holder.binding.detail.text = ""
-            holder.binding.detail.visibility = View.GONE
-        } else {
-            holder.binding.detail.text = holder.data.details
-            holder.binding.detail.visibility = View.VISIBLE
-        }
+        holder.binding.detail.text = holder.data.details
+        holder.binding.detail.visibility = if (holder.data.details.isEmpty()) View.GONE else View.VISIBLE
 
         if (holder.data.showCount) {
             val currentTime = System.currentTimeMillis()

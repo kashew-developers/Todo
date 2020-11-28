@@ -67,7 +67,10 @@ class AddTaskActivity : AppCompatActivity() {
             return
         }
 
-        dbHelper.insertTask(db, binding.taskTitle.text.toString(),
+        val tempDb = db
+        tempDb ?: return
+
+        dbHelper.insertTask(tempDb, binding.taskTitle.text.toString(),
                 binding.taskDetails.text.toString(), groupName,
                 binding.dailyTask.isChecked, binding.showCount.isChecked)
         dbHelper.close()

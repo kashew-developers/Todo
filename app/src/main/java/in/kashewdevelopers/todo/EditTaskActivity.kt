@@ -76,7 +76,10 @@ class EditTaskActivity : AppCompatActivity() {
             return
         }
 
-        dbHelper.updateTask(db, id, binding.taskTitle.text.toString(),
+        val tempDb = db
+        tempDb ?: return
+
+        dbHelper.updateTask(tempDb, id, binding.taskTitle.text.toString(),
                 binding.taskDetails.text.toString(),
                 binding.dailyTask.isChecked, binding.showCount.isChecked)
         dbHelper.close()

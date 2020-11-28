@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 class GroupViewHolder(view: View) : RecyclerView.ViewHolder(view), View.OnClickListener, View.OnLongClickListener {
 
     val binding = GroupListItemLayoutBinding.bind(view)
-    var groupName: String? = null
+    var groupName: String = ""
 
     init {
         binding.root.setOnClickListener(this)

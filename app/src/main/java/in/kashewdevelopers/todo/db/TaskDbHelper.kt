@@ -110,7 +110,7 @@ class TaskDbHelper(private val context: Context) : SQLiteOpenHelper(context, DB_
             Constants.SORT_PENDING_COMPLETE -> sortOrder = COLUMN_LAST_COMPLETED_TIME
             Constants.SORT_COMPLETE_PENDING -> sortOrder = "$COLUMN_LAST_COMPLETED_TIME DESC"
             Constants.SORT_OLD_EARLY -> sortOrder = COLUMN_TASK_CREATING_TIME
-            Constants.SORT_EARLY_OLD -> sortOrder = "$COLUMN_TASK_CREATING_TIME= DESC"
+            Constants.SORT_EARLY_OLD -> sortOrder = "$COLUMN_TASK_CREATING_TIME DESC"
         }
         return sortOrder
     }
