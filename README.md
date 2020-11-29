@@ -15,11 +15,7 @@
     </tr>
     <tr>
         <th>Full description</th>
-        <td> Simple X & O game. Play with the unbeatable AI. Or play with your friends. Or you can play with your friends online <br /> This is an open source application. You can view its source code on github [kashew-developers/XO](https://github.com/kashew-developers/XO)Create Daily Tasks or single time tasks. Track how you are performing on your daily tasks. 
-
-Separate your tasks into groups to organize and manage them properly.
-
-This is an open source application, you can find its source code on GitHub at https://github.com/kashew-developers/Todo</td>
+        <td>Create Daily Tasks or single time tasks. Track how you are performing on your daily tasks.<br />Separate your tasks into groups to organize and manage them properly.<br />This is an open source application, you can find its source code on GitHub at https://github.com/kashew-developers/todo</td>
     </tr>
 </table>
 
