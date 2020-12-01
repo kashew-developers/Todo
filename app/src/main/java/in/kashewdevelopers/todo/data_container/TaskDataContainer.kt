@@ -7,7 +7,6 @@ import java.util.*
 
 class TaskDataContainer(cursor: Cursor) {
 
-
     val title: String = cursor.getString(cursor.getColumnIndex(TaskDbHelper.COLUMN_TITLE))
     val details: String = cursor.getString(cursor.getColumnIndex(TaskDbHelper.COLUMN_DETAIL))
 
@@ -22,20 +21,29 @@ class TaskDataContainer(cursor: Cursor) {
     val taskCreationTime: Long
 
     init {
-
         if (dailyTask) {
             val timestamp = cursor.getString(cursor.getColumnIndex(TaskDbHelper.COLUMN_LAST_COMPLETED_TIME))
             if (timestamp == null) {
                 isCompleted = false
             } else {
-                var calendar = Calendar.getInstance(TimeZone.getDefault())
-                val todayDayOfYear = calendar.get(Calendar.DAY_OF_YEAR)
+                val todayCal = Calendar.getInstance()
+                val todayDate = "${todayCal.get(Calendar.YEAR)}.${todayCal.get(Calendar.MONTH)}.${todayCal.get(Calendar.DAY_OF_MONTH)}"
 
-                calendar = Calendar.getInstance(TimeZone.getDefault())
-                calendar.timeInMillis = Timestamp.valueOf(timestamp).time
-                val taskDayOfYear = calendar.get(Calendar.DAY_OF_YEAR)
+                todayCal.timeInMillis = Timestamp.valueOf(timestamp).time
 
-                isCompleted = todayDayOfYear == taskDayOfYear
+                val taskCal = Calendar.getInstance(TimeZone.getTimeZone("GMT"))
+                taskCal.set(Calendar.YEAR, todayCal.get(Calendar.YEAR))
+                taskCal.set(Calendar.MONTH, todayCal.get(Calendar.MONTH))
+                taskCal.set(Calendar.DAY_OF_YEAR, todayCal.get(Calendar.DAY_OF_YEAR))
+                taskCal.set(Calendar.HOUR_OF_DAY, todayCal.get(Calendar.HOUR_OF_DAY))
+                taskCal.set(Calendar.MINUTE, todayCal.get(Calendar.MINUTE))
+                taskCal.set(Calendar.SECOND, todayCal.get(Calendar.SECOND))
+
+                taskCal.time
+                taskCal.timeZone = TimeZone.getDefault()
+                val taskDate = "${taskCal.get(Calendar.YEAR)}.${taskCal.get(Calendar.MONTH)}.${taskCal.get(Calendar.DAY_OF_MONTH)}"
+
+                isCompleted = (todayDate == taskDate)
             }
         } else {
             isCompleted = (cursor.getString(cursor.getColumnIndex(TaskDbHelper.COLUMN_LAST_COMPLETED_TIME)) != null)
