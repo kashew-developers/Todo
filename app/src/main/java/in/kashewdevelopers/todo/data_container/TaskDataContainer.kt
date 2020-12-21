@@ -4,6 +4,7 @@ import `in`.kashewdevelopers.todo.db.TaskDbHelper
 import android.database.Cursor
 import java.sql.Timestamp
 import java.util.*
+import kotlin.math.ceil
 
 class TaskDataContainer(cursor: Cursor) {
 
@@ -12,7 +13,7 @@ class TaskDataContainer(cursor: Cursor) {
 
     val id = cursor.getInt(cursor.getColumnIndex(TaskDbHelper.COLUMN_ID))
     val count = cursor.getInt(cursor.getColumnIndex(TaskDbHelper.COLUMN_COUNT))
-    val total = cursor.getInt(cursor.getColumnIndex(TaskDbHelper.COLUMN_TOTAL))
+    val total: Int
 
     val dailyTask = cursor.getInt(cursor.getColumnIndex(TaskDbHelper.COLUMN_DAILY_TASK)) == 1
     val showCount = cursor.getInt(cursor.getColumnIndex(TaskDbHelper.COLUMN_SHOW_COUNT)) == 1
@@ -51,6 +52,23 @@ class TaskDataContainer(cursor: Cursor) {
 
         taskCreationTime = Timestamp.valueOf(cursor.getString(
                 cursor.getColumnIndex(TaskDbHelper.COLUMN_TASK_CREATING_TIME))).time
+
+        val todayCal = Calendar.getInstance()
+        todayCal.timeInMillis = taskCreationTime
+
+        val taskCal = Calendar.getInstance(TimeZone.getTimeZone("GMT"))
+        taskCal.set(Calendar.YEAR, todayCal.get(Calendar.YEAR))
+        taskCal.set(Calendar.MONTH, todayCal.get(Calendar.MONTH))
+        taskCal.set(Calendar.DAY_OF_YEAR, todayCal.get(Calendar.DAY_OF_YEAR))
+
+        taskCal.time
+        taskCal.timeZone = TimeZone.getDefault()
+
+        taskCal.set(Calendar.HOUR_OF_DAY, 0)
+        taskCal.set(Calendar.MINUTE, 0)
+        taskCal.set(Calendar.SECOND, 0)
+
+        total = ceil((System.currentTimeMillis() - taskCal.time.time) / 1000.0 / 60 / 60 / 24).toInt()
     }
 
 }

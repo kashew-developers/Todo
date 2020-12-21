@@ -8,7 +8,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import kotlin.math.ceil
 
 class TaskRecycleListAdapter(private var cursor: Cursor, private var context: Context) : RecyclerView.Adapter<TaskViewHolder>() {
 
@@ -38,9 +37,7 @@ class TaskRecycleListAdapter(private var cursor: Cursor, private var context: Co
         holder.binding.detail.visibility = if (holder.data.details.isEmpty()) View.GONE else View.VISIBLE
 
         if (holder.data.showCount) {
-            val currentTime = System.currentTimeMillis()
-            val totalDays = ceil((currentTime - holder.data.taskCreationTime) / 1000.0 / 60 / 60 / 24).toInt()
-            holder.binding.taskCountStat.text = context.getString(R.string.task_count_stat, holder.data.count, totalDays)
+            holder.binding.taskCountStat.text = context.getString(R.string.task_count_stat, holder.data.count, holder.data.total)
             holder.binding.taskCountStat.visibility = View.VISIBLE
         } else {
             holder.binding.taskCountStat.visibility = View.GONE
